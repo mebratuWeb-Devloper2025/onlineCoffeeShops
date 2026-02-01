@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #41171A;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: #41171A;
+            /* NEW background color */
+            color: white;
+            position: static;
+            height: 80px;
+            /* No motion, not sticky */
+            font-weight: bold;
+        }
+
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        header nav a:hover {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px;
+            min-height: 80vh;
+        }
+
+        .hero-text {
+            width: 50%;
+        }
+
+        .tag {
+            color: #FF9F1C;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            font-size: 16px;
+            opacity: 0.85;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+        }
+
+
+        .order {
+            padding: 12px 25px;
+            background: #FF9F1C;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .order:hover {
+            color: white;
+        }
+
+        .contact {
+            padding: 12px 25px;
+            background: transparent;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .contact:hover {
+            color: #FF9F1C;
+        }
+
+        .hero-img img {
+            display: block;
+            object-fit: cover;
+        }
+
+        /* --- Navigation Bar --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-family: "Georgia", serif;
+        }
+
+        .navbar a {
+            position: relative;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffcc80;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ff9800;
+        }
+
+        .navbar a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 2px;
+            background-color: #ff9800;
+            transition: 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* ABOUT */
+        .about {
+            padding: 70px 10%;
+            background: #f8f7f6;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 70px;
+        }
+
+        .about-image img {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .about-content h2 {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: black;
+        }
+
+        .underline {
+            width: 60px;
+            height: 4px;
+            background: #ffa726;
+            margin: 10px 0 20px;
+        }
+
+        .about-content p {
+            color: #4a4a4a;
+            line-height: 1.8;
+            max-width: 520px;
+            font-size: 16px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            font-size: 24px;
+            color: #e58f22;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #000;
+        }
+
+        /* MENU */
+        .menu-section {
+            background: #1c1c1c;
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .menu-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .menu-title::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background: #f5a623;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 4px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .menu-box {
+            padding: 10px;
+        }
+
+        .menu-box img {
+            width: 200px;
+            height: 300px;
+            margin-bottom: 15px;
+        }
+
+        .menu-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .menu-box p {
+            font-size: 14px;
+            color: #d7d7d7;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* CONTACT */
+        .contact-section {
+            background-color: #3e2723;
+            color: #f5f1ea;
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d7ccc8;
+            position: relative;
+        }
+
+        .contact-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #8d6e63;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-info,
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: rgba(141, 110, 99, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-info p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            margin-right: 15px;
+            font-size: 1.3rem;
+            color: #d7ccc8;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #8d6e63;
+            border-radius: 5px;
+            background-color: #5d4037;
+            color: #f5f1ea;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #d7ccc8;
+            box-shadow: 0 0 0 2px rgba(215, 204, 200, 0.3);
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #8d6e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: #6d4c41;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn.disabled {
+            background-color: #a1887f;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .submit-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            background-color: #a1887f;
+        }
+
+        .form-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #d7ccc8;
+            text-align: center;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #2c1810;
+            color: #d7ccc8;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+
+        }
+
+        .footer-icons span {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(141, 110, 99, 0.2);
+        }
+
+        .footer-icons span:hover {
+            transform: translateY(-5px);
+            background-color: #0ef;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <img src="Logo.png" alt="logo" width="80">
+
+        </div>
+
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="admin.html">Admin</a>
+            <a href="branche.html">Branches </a>
+            <a href="feedback.html">Feedback</a>
+            <a href="#contact">Contact</a>
+            <a href="sign.html">Sign</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h3 class="tag">Habesha Coffee</h3>
+            <h1>Make your day great with our special coffee!</h1>
+            <p>Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy.</p>
+
+            <div class="buttons">
+                <button class="order" onclick="location.href='order.html'">Order Now</button>
+                <button class="contact" onclick="location.href='contact.html'">Contact Us</button>
+            </div>
+        </div>
+
+        <div class="hero-img">
+            <img src="cup.png" width="500" height="500" alt="Coffee cup">
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="about-container">
+
+            <div class="about-image">
+                <img src="ET.jpg" alt="About Image">
+            </div>
+
+            <div class="about-content">
+                <h2>ABOUT US</h2>
+                <div class="underline"></div>
+
+                <p>
+                    At Habesha Coffee Shop, we celebrate the rich flavors and traditions of Ethiopian coffee.
+                    Our mission is to provide a warm and welcoming space where coffee enthusiasts can
+                    experience authentic coffee culture, savor freshly brewed drinks, and enjoy meaningful
+                    conversations with friends and family. Every cup we serve is crafted with passion and care.
+                </p>
+
+                <div class="social-icons">
+                    <a href="#"><i class="fa-solid fa-hand-pointer"></i></a>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section class="menu-section" id="menu">
+        <h2 class="menu-title">HABESHA COFFEE MENU</h2>
+
+        <div class="menu-grid">
+
+            <div class="menu-box">
+                <img src="buna.png" alt="Jebena Buna">
+                <h3>Jebena Buna</h3>
+                <p>Traditional Ethiopian coffee brewed in a clay pot for rich aroma.</p>
+            </div>
+
+            <div class="menu-box">
+                <img src="macchiato.png" alt="Macchiato">
+                <h3>Macchiato</h3>
+                <p>Strong espresso mixed with milk, the pride of Ethiopian coffee.</p>
+            </div>
+
+            <div class="menu-box">
+                <img src="spris.png" alt="Coffee Spris">
+                <h3>Coffee Spris</h3>
+                <p>A unique layered drink combining Ethiopian coffee with aromatic tea for a refreshing taste.</p>
+
+            </div>
+
+            <div class="menu-box">
+                <img src="lemon.png" alt="Buna Latte">
+                <h3>Lemon Coffee</h3>
+                <p>A refreshing blend of bold coffee with a hint of zesty lemon flavor.</p>
+            </div>
+
+            <div class="menu-box">
+                <img src="mocha.png" alt="Turkish Coffee">
+                <h3>Mocha coffee</h3>
+                <p>A rich and smooth coffee made with espresso, chocolate, and steamed milk.</p>
+
+            </div>
+
+            <div class="menu-box">
+                <img src="butter.png" alt="Butter Coffee">
+                <h3>Butter Coffee</h3>
+                <p>A traditional Ethiopian coffee blended with rich butter for a smooth, energizing taste.</p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <h2 class="contact-title">CONTACT</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p><i class="icon fas fa-envelope"></i> Habeshacoffee@gmail.com</p>
+                <p><i class="icon fas fa-phone"></i> +251991215273</p>
+                <p><i class="icon far fa-clock"></i> Monday – Friday: 2:00 AM – 12:00 PM local time</p>
+                <p><i class="icon far fa-clock"></i> Saturday: 5:00 AM – 1:00 PM</p>
+                <p><i class="icon far fa-clock"></i> Sunday: Closed</p>
+            </div>
+
+            <div class="contact-form">
+                <input type="text" placeholder="Your name" id="name">
+                <input type="email" placeholder="Your email" id="email">
+                <textarea placeholder="Your message" id="message"></textarea>
+                <button type="button" class="submit-btn disabled" id="submitBtn" disabled>Submit</button>
+                <p class="form-info"><i class="fas fa-info-circle"></i> Form submission is currently disabled</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 Habesha Coffee Shop </p>
+        <div class="footer-icons">
+            <a href="https://www.facebook.com/YourCoffeeShopPage" target="_blank" title="Facebook">
+                <span><i class="fab fa-facebook-f"></i></span>
+            </a>
+            <a href="https://www.instagram.com/YourCoffeeShopPage" target="_blank" title="Instagram">
+                <span><i class="fab fa-instagram"></i></span>
+            </a>
+            <a href="https://t.me/INFOTEC3M" target="_blank" title="Telegram">
+                <span><i class="fab fa-telegram-plane"></i></span>
+            </a>
+        </div>
+
+        <div class="footer-links">
+            <a href="privacy.html" id="privacyLink">Privacy Policy</a>
+            <a href="terms.html" style="margin-left: 15px;">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script>
+        // Select form elements
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+        const formInfo = document.querySelector('.form-info');
+
+        // Submit button click handler
+        submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const message = messageInput.value.trim();
+
+            // Validation
+            if (!name) {
+                alert("Please enter your name.");
+                nameInput.focus();
+                return;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address (e.g., name@example.com).");
+                emailInput.focus();
+                return;
+            }
+
+            if (!message) {
+                alert("Please enter your message.");
+                messageInput.focus();
+                return;
+            }
+
+            if (message.length < 10) {
+                alert("Please enter a more detailed message (at least 10 characters).");
+                messageInput.focus();
+                return;
+            }
+
+            // Show success message
+            const successMessage = `Thank you ${name}! Your message has been sent successfully.\n\nWe'll get back to you at ${email} within 24 hours.\n\nMessage Preview: ${message.substring(0, 100)}${message.length > 100 ? '...' : ''}`;
+            alert(successMessage);
+
+            // Reset form
+            nameInput.value = '';
+            emailInput.value = '';
+            messageInput.value = '';
+
+            // Update info message
+            formInfo.innerHTML = '<i class="fas fa-check-circle"></i> Message sent successfully!';
+            formInfo.style.color = '#4CAF50';
+
+            // Reset info message after 5 seconds
+            setTimeout(() => {
+                formInfo.innerHTML = '<i class="fas fa-info-circle"></i> Form is ready for submission';
+                formInfo.style.color = '#d7ccc8';
+            }, 5000);
+
+            // Disable button again
+            submitBtn.classList.add('disabled');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submit";
+        });
+
+        // Optional: Real-time validation to enable/disable submit button
+        const formInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                const allFilled = Array.from(formInputs).every(field => field.value.trim() !== '');
+                if (allFilled) {
+                    submitBtn.classList.remove('disabled');
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.classList.add('disabled');
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

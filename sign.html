@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Coffee Shop - Sign In</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f5f0;
+            color: #5c3d2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(248, 245, 240, 0.9);
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1100px;
+            width: 100%;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(92, 61, 46, 0.2);
+        }
+        
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(rgba(92, 61, 46, 0.85), rgba(92, 61, 46, 0.9)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .left-panel h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .left-panel h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .left-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.85;
+        }
+        
+        .features {
+            margin-top: 20px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .feature i {
+            margin-right: 15px;
+            color: #d4a55a;
+            font-size: 1.2rem;
+        }
+        
+        .right-panel {
+            flex: 1;
+            padding: 50px 40px;
+            overflow-y: auto;
+            max-height: 700px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: #5c3d2e;
+            border-bottom: 3px solid #d4a55a;
+        }
+        
+        .form-container {
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Logout Container Styles */
+        .logout-container {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .logout-container.active {
+            display: block;
+        }
+        
+        .user-info {
+            background-color: #fcf9f5;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 4px solid #d4a55a;
+        }
+        
+        .user-icon {
+            font-size: 4rem;
+            color: #d4a55a;
+            margin-bottom: 20px;
+        }
+        
+        .user-name {
+            font-size: 1.8rem;
+            color: #5c3d2e;
+            margin-bottom: 10px;
+        }
+        
+        .user-email {
+            font-size: 1.1rem;
+            color: #7a5c48;
+            margin-bottom: 20px;
+        }
+        
+        .user-status {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        
+        .logout-btn {
+            padding: 16px 40px;
+            background-color: #5c3d2e;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logout-btn:hover {
+            background-color: #4a3124;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(92, 61, 46, 0.2);
+        }
+        
+        .logout-btn i {
+            margin-right: 10px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5c3d2e;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e6dfd8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: #d4a55a;
+            outline: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #5c3d2e;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #4a3124;
+        }
+        
+        .social-login {
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .social-login::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #eee;
+            z-index: 1;
+        }
+        
+        .social-login p {
+            display: inline-block;
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+            color: #888;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .google { background-color: #DB4437; }
+        .facebook { background-color: #4267B2; }
+        .apple { background-color: #000000; }
+        .twitter { background-color: #1DA1F2; }
+        .instagram { background-color: #E1306C; }
+        .amazon { background-color: #FF9900; }
+        
+        .notification-section {
+            background-color: #fcf9f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #d4a55a;
+        }
+        
+        .notification-section h3 {
+            margin-bottom: 15px;
+            color: #5c3d2e;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-section h3 i {
+            margin-right: 10px;
+            color: #d4a55a;
+        }
+        
+        .notification-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .notification-option input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+        
+        .notification-option label {
+            cursor: pointer;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 40px 30px;
+            }
+            
+            .left-panel h1 {
+                font-size: 2.3rem;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .left-panel, .right-panel {
+                padding: 30px 20px;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .social-icons {
+                flex-wrap: wrap;
+            }
+            
+            .logout-btn {
+                width: 100%;
+                padding: 16px;
+            }
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #d4a55a;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .right-panel .logo {
+            display: none;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .forgot-password a {
+            color: #d4a55a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="logo">
+                <i class="fas fa-coffee"></i>
+                <h1>Habesha Coffee Shop</h1>
+            </div>
+            <h2>Experience Authentic Ethiopian Coffee</h2>
+            <p>Join our community of coffee lovers and get access to exclusive offers, new menu announcements, and rewards.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Get notified when new menu items are added</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Exclusive members-only discounts</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Earn rewards with every purchase</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Early access to seasonal specials</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('signin')">Sign In</div>
+                <div class="tab" onclick="switchTab('register')">Register</div>
+            </div>
+            
+            <!-- Sign In Form -->
+            <div id="signin-form" class="form-container active">
+                <div class="form-group">
+                    <label for="signin-email">Email Address</label>
+                    <input type="email" id="signin-email" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" placeholder="Enter your password">
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#">Forgot your password?</a>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                
+                <button class="btn" onclick="signIn()">Sign In</button>
+                
+                <!-- Social Login -->
+                <div class="social-login">
+                    <p>Or sign in with</p>
+                    <div class="social-icons">
+                        <div class="social-icon google" onclick="socialLogin('google')">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-icon facebook" onclick="socialLogin('facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-icon apple" onclick="socialLogin('apple')">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                        <div class="social-icon twitter" onclick="socialLogin('twitter')">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="social-icon instagram" onclick="socialLogin('instagram')">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="social-icon amazon" onclick="socialLogin('amazon')">
+                            <i class="fab fa-amazon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Preferences -->
+                <div class="notification-section">
+                    <h3><i class="fas fa-bell"></i> Notification Preferences</h3>
+                    <p>Select how you'd like to be notified when we add new menu items:</p>
+                    
+                    <div class="notification-option">
+                        <input type="checkbox" id="notify-email" checked>
+                        <label for="notify-email">Email notifications</label>
+                    </div>
+                    <div class="notification-option">
+                        <input type="checkbox" id="notify-sms">
+                        <label for="notify-sms">SMS/text messages</label>
+                    </div>
+                    <div class="notification-option">
+                        <input type="checkbox" id="notify-push" checked>
+                        <label for="notify-push">Push notifications</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="form-container">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input type="email" id="register-email" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" placeholder="Create a password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" placeholder="Confirm your password">
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">I agree to the <a href="#" style="color: #d4a55a;">Terms of Service</a> and <a href="#" style="color: #d4a55a;">Privacy Policy</a></label>
+                </div>
+                
+                <button class="btn" onclick="register()">Create Account</button>
+                
+                <!-- Social Register -->
+                <div class="social-login">
+                    <p>Or register with</p>
+                    <div class="social-icons">
+                        <div class="social-icon google" onclick="socialRegister('google')">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-icon facebook" onclick="socialRegister('facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-icon apple" onclick="socialRegister('apple')">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                        <div class="social-icon twitter" onclick="socialRegister('twitter')">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="social-icon instagram" onclick="socialRegister('instagram')">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="social-icon amazon" onclick="socialRegister('amazon')">
+                            <i class="fab fa-amazon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Preferences -->
+                <div class="notification-section">
+                    <h3><i class="fas fa-bell"></i> Stay Updated on New Menu Items</h3>
+                    <p>We'll let you know when we add exciting new drinks and food to our menu:</p>
+                    
+                    <div class="notification-option">
+                        <input type="checkbox" id="register-notify-email" checked>
+                        <label for="register-notify-email">Notify me by email about new menu items</label>
+                    </div>
+                    <div class="notification-option">
+                        <input type="checkbox" id="register-notify-sms">
+                        <label for="register-notify-sms">Notify me by SMS about new menu items</label>
+                    </div>
+                    <div class="notification-option">
+                        <input type="checkbox" id="register-notify-special" checked>
+                        <label for="register-notify-special">Also send me special offers and discounts</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Logout Container -->
+            <div id="logout-container" class="logout-container">
+                <div class="user-info">
+                    <div class="user-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-name" id="logged-user-name">Welcome, Coffee Lover!</div>
+                    <div class="user-email" id="logged-user-email">user@example.com</div>
+                    <div class="user-status">Active Member</div>
+                    <p>You are now signed in to your Habesha Coffee Shop account.</p>
+                </div>
+                
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                
+                <div class="notification-section" style="margin-top: 30px;">
+                    <h3><i class="fas fa-coffee"></i> Member Benefits</h3>
+                    <p>As a logged-in member, you can:</p>
+                    
+                    <div class="notification-option">
+                        <i class="fas fa-star" style="color: #d4a55a; margin-right: 10px;"></i>
+                        <label>View your reward points balance</label>
+                    </div>
+                    <div class="notification-option">
+                        <i class="fas fa-tag" style="color: #d4a55a; margin-right: 10px;"></i>
+                        <label>Access exclusive member discounts</label>
+                    </div>
+                    <div class="notification-option">
+                        <i class="fas fa-history" style="color: #d4a55a; margin-right: 10px;"></i>
+                        <label>View your order history</label>
+                    </div>
+                    <div class="notification-option">
+                        <i class="fas fa-bell" style="color: #d4a55a; margin-right: 10px;"></i>
+                        <label>Receive notifications about new menu items</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current user data (in a real app, this would come from a server)
+        let currentUser = null;
+        
+        // Switch between Sign In and Register tabs
+        function switchTab(tabName) {
+            // Don't switch tabs if user is logged in
+            if (currentUser) return;
+            
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            if (tabName === 'signin') {
+                document.querySelector('.tab:first-child').classList.add('active');
+                document.getElementById('signin-form').classList.add('active');
+                document.getElementById('register-form').classList.remove('active');
+            } else {
+                document.querySelector('.tab:last-child').classList.add('active');
+                document.getElementById('signin-form').classList.remove('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+        
+        // Sign In function
+        function signIn() {
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
+            }
+            
+            // In a real application, you would send this data to a server
+            // For demo purposes, we'll simulate a successful login
+            currentUser = {
+                name: email.split('@')[0],
+                email: email,
+                isLoggedIn: true
+            };
+            
+            // Show logout screen
+            showLogoutScreen();
+            
+            // Show notification preferences status
+            const emailNotify = document.getElementById('notify-email').checked;
+            const smsNotify = document.getElementById('notify-sms').checked;
+            const pushNotify = document.getElementById('notify-push').checked;
+            
+            let notificationMsg = "Welcome back! Notification preferences:\n";
+            if (emailNotify) notificationMsg += "✓ Email notifications enabled\n";
+            if (smsNotify) notificationMsg += "✓ SMS notifications enabled\n";
+            if (pushNotify) notificationMsg += "✓ Push notifications enabled\n";
+            
+            if (emailNotify || smsNotify || pushNotify) {
+                setTimeout(() => alert(notificationMsg + "\nYou'll be notified when new menu items are added!"), 500);
+            }
+        }
+        
+        // Register function
+        function register() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (!terms) {
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // In a real application, you would send this data to a server
+            // For demo purposes, we'll simulate account creation and login
+            currentUser = {
+                name: name,
+                email: email,
+                isLoggedIn: true
+            };
+            
+            // Show logout screen
+            showLogoutScreen();
+            
+            // Show notification preferences status
+            const emailNotify = document.getElementById('register-notify-email').checked;
+            const smsNotify = document.getElementById('register-notify-sms').checked;
+            const specialNotify = document.getElementById('register-notify-special').checked;
+            
+            let notificationMsg = "Account created successfully! Your notification preferences:\n";
+            if (emailNotify) notificationMsg += "✓ New menu email notifications enabled\n";
+            if (smsNotify) notificationMsg += "✓ New menu SMS notifications enabled\n";
+            if (specialNotify) notificationMsg += "✓ Special offers and discounts enabled\n";
+            
+            if (emailNotify || smsNotify || specialNotify) {
+                setTimeout(() => alert(notificationMsg + "\nThank you for joining Habesha Coffee Shop!"), 500);
+            }
+        }
+        
+        // Show logout screen after successful login/registration
+        function showLogoutScreen() {
+            // Hide all forms and tabs
+            document.getElementById('signin-form').classList.remove('active');
+            document.getElementById('register-form').classList.remove('active');
+            document.querySelector('.tabs').style.display = 'none';
+            
+            // Show logout container
+            const logoutContainer = document.getElementById('logout-container');
+            logoutContainer.classList.add('active');
+            
+            // Update user info in logout screen
+            document.getElementById('logged-user-name').textContent = `Welcome, ${currentUser.name}!`;
+            document.getElementById('logged-user-email').textContent = currentUser.email;
+        }
+        
+        // Logout function
+        function logout() {
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to logout?')) {
+                // Reset current user
+                currentUser = null;
+                
+                // Hide logout container
+                document.getElementById('logout-container').classList.remove('active');
+                
+                // Show sign in form and tabs again
+                document.querySelector('.tabs').style.display = 'flex';
+                document.getElementById('signin-form').classList.add('active');
+                
+                // Reset sign in form
+                document.getElementById('signin-email').value = '';
+                document.getElementById('signin-password').value = '';
+                document.getElementById('remember-me').checked = false;
+                
+                // Switch to sign in tab
+                switchTab('signin');
+                
+                // Show logout confirmation
+                setTimeout(() => alert('You have been successfully logged out.'), 300);
+            }
+        }
+        
+        // Social login/register function
+        function socialLogin(platform) {
+            // For demo, create a user based on the platform
+            currentUser = {
+                name: platform.charAt(0).toUpperCase() + platform.slice(1) + " User",
+                email: `user@${platform}.com`,
+                isLoggedIn: true
+            };
+            
+            alert(`Signing in with ${platform.charAt(0).toUpperCase() + platform.slice(1)} account`);
+            
+            // Show logout screen
+            showLogoutScreen();
+            
+            // Check notification preferences
+            const emailNotify = document.getElementById('notify-email').checked;
+            const smsNotify = document.getElementById('notify-sms').checked;
+            const pushNotify = document.getElementById('notify-push').checked;
+            
+            if (emailNotify || smsNotify || pushNotify) {
+                setTimeout(() => alert(`You'll be notified when new menu items are added via your selected channels!`), 500);
+            }
+        }
+        
+        function socialRegister(platform) {
+            // For demo, create a user based on the platform
+            currentUser = {
+                name: platform.charAt(0).toUpperCase() + platform.slice(1) + " User",
+                email: `newuser@${platform}.com`,
+                isLoggedIn: true
+            };
+            
+            alert(`Registering with ${platform.charAt(0).toUpperCase() + platform.slice(1)} account`);
+            
+            // Show logout screen
+            showLogoutScreen();
+            
+            // Check notification preferences
+            const emailNotify = document.getElementById('register-notify-email').checked;
+            const smsNotify = document.getElementById('register-notify-sms').checked;
+            const specialNotify = document.getElementById('register-notify-special').checked;
+            
+            if (emailNotify || smsNotify || specialNotify) {
+                setTimeout(() => alert(`You'll receive updates about new menu items via your selected channels!`), 500);
+            }
+        }
+    </script>
+</body>
+</html>

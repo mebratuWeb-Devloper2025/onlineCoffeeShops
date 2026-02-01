@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Coffee Shop - Amhara Branches</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f6f2ee;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #3b1f0f;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(59, 31, 15, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: white;
+            padding: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #3b1f0f;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 15px 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            background: #3b1f0f;
+            color: white;
+        }
+
+        .navbar a.active {
+            background: #3b1f0f;
+            color: white;
+        }
+
+        .navbar a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #d4a55a;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #3b1f0f;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Region Banner */
+        .region-banner {
+            background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(44, 24, 16, 0.3);
+        }
+
+        .region-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .region-banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Branch Locator Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #3b1f0f;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container for branches and map */
+        .container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        /* Branches List */
+        .branches {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .branches h3 {
+            color: #3b1f0f;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0d6d0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .branches h3 i {
+            color: #d4a55a;
+        }
+
+        .branch-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #e0d6d0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(59, 31, 15, 0.15);
+            border-color: #d4a55a;
+            background: #fefaf5;
+        }
+
+        .branch-card.active {
+            border-color: #3b1f0f;
+            background: #f9f1e9;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #3b1f0f;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .branch-card:hover::before, 
+        .branch-card.active::before {
+            transform: scaleY(1);
+        }
+
+        .branch-card strong {
+            color: #3b1f0f;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .branch-card strong i {
+            color: #d4a55a;
+        }
+
+        .branch-card p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .branch-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .feature-tag {
+            background: #f0e6d6;
+            color: #3b1f0f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 2;
+            min-width: 300px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            height: 500px;
+        }
+
+        .map {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 250px;
+            z-index: 1000;
+        }
+
+        .map-overlay h4 {
+            color: #3b1f0f;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-overlay h4 i {
+            color: #d4a55a;
+        }
+
+        .map-overlay p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Branch Details */
+        .branch-details {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .branch-details.active {
+            display: block;
+        }
+
+        .branch-details-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0d6d0;
+        }
+
+        .branch-details-header i {
+            font-size: 2rem;
+            color: #d4a55a;
+        }
+
+        .branch-details-header h3 {
+            color: #3b1f0f;
+            font-size: 1.8rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .detail-item i {
+            color: #d4a55a;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .detail-item h4 {
+            color: #3b1f0f;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .detail-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Amhara Region Info */
+        .amhara-info {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .amhara-info h3 {
+            color: #3b1f0f;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .amhara-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .amhara-feature {
+            text-align: center;
+            padding: 20px;
+            background: #f9f1e9;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .amhara-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(59, 31, 15, 0.1);
+        }
+
+        .amhara-feature i {
+            font-size: 2.5rem;
+            color: #d4a55a;
+            margin-bottom: 15px;
+        }
+
+        .amhara-feature h4 {
+            color: #3b1f0f;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .amhara-feature p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: #3b1f0f;
+            color: white;
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            color: #d4a55a;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #d4a55a;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #d4a55a;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+            
+            .map-overlay {
+                position: relative;
+                top: 0;
+                right: 0;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            /* Mobile Navigation Styles */
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 20px;
+            }
+            
+            .navbar {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .navbar.active {
+                display: flex;
+            }
+            
+            .navbar a {
+                padding: 15px;
+                border-bottom: 1px solid #f0f0f0;
+                text-align: center;
+            }
+            
+            .navbar a:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .branch-card strong {
+                font-size: 1.1rem;
+            }
+            
+            .amhara-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fas fa-coffee"></i> Habesha Coffee Shop</h1>
+    <p>Authentic Ethiopian Coffee Experience Across Amhara Region</p>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+</header>
+
+<!-- Navigation Bar -->
+<nav class="navbar" id="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="admin.html">Admin</a>
+    <a href="branche.html" class="active">Branche</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="contact.html">Contact</a>
+    <a href="sign.html">Sign</a>
+</nav>
+
+<main class="main-container">
+    <!-- Region Banner -->
+    <div class="region-banner">
+        <h2><i class="fas fa-map"></i> Amhara Region Branches</h2>
+        <p>Serving authentic Ethiopian coffee across the historic Amhara region. Experience our traditional coffee ceremony in cities rich with culture and history.</p>
+    </div>
+
+    <div class="section-title">
+        <h2><i class="fas fa-map-marker-alt"></i> Our Amhara Branches</h2>
+        <p>Visit us at any of our locations across the beautiful Amhara region</p>
+    </div>
+
+    <div class="container">
+        <div class="branches">
+            <h3><i class="fas fa-store"></i> Select a Branch</h3>
+            
+            <!-- Gondar Branches -->
+            <div class="branch-card active" onclick="changeMap('Gondar Piazza Ethiopia', 0)">
+                <strong><i class="fas fa-utensils"></i> Gondar Piazza</strong>
+                <p>Central Gondar, Near Goha Hotel</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Live Music</span>
+                    <span class="feature-tag">Art Gallery</span>
+                    <span class="feature-tag">Private Events</span>
+                </div>
+            </div>
+
+            <div class="branch-card" onclick="changeMap('Gondar Airport Ethiopia', 1)">
+                <strong><i class="fas fa-plane"></i> Gondar Airport</strong>
+                <p>Gondar Airport Terminal, Departure Area</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Airport Location</span>
+                    <span class="feature-tag">Grab & Go</span>
+                    <span class="feature-tag">Traveler Specials</span>
+                </div>
+            </div>
+
+            <!-- Bahir Dar Branch -->
+            <div class="branch-card" onclick="changeMap('Bahir Dar Ethiopia', 2)">
+                <strong><i class="fas fa-water"></i> Bahir Dar</strong>
+                <p>Lake Tana Shore, Near Blue Nile Hotel</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Lake View</span>
+                    <span class="feature-tag">Boat Access</span>
+                    <span class="feature-tag">Traditional Music</span>
+                </div>
+            </div>
+
+            <!-- Debre Tabor Branch -->
+            <div class="branch-card" onclick="changeMap('Debre Tabor Ethiopia', 3)">
+                <strong><i class="fas fa-mountain"></i> Debre Tabor</strong>
+                <p>City Center, Near Simien Mountains</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Mountain View</span>
+                    <span class="feature-tag">Local Artisans</span>
+                    <span class="feature-tag">Cultural Events</span>
+                </div>
+            </div>
+
+            <!-- Debrik Branch -->
+            <div class="branch-card" onclick="changeMap('Debre Markos Ethiopia', 4)">
+                <strong><i class="fas fa-graduation-cap"></i> Debre Markos</strong>
+                <p>University Area, Near DMU Campus</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Student Discount</span>
+                    <span class="feature-tag">Study Area</span>
+                    <span class="feature-tag">Book Exchange</span>
+                </div>
+            </div>
+
+            <!-- Additional Amhara Branches -->
+            <div class="branch-card" onclick="changeMap('Lalibela Ethiopia', 5)">
+                <strong><i class="fas fa-church"></i> Lalibela</strong>
+                <p>Near Rock-Hewn Churches</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Tourist Hub</span>
+                    <span class="feature-tag">Cultural Heritage</span>
+                    <span class="feature-tag">Guide Service</span>
+                </div>
+            </div>
+
+            <div class="branch-card" onclick="changeMap('Woldia Ethiopia', 6)">
+                <strong><i class="fas fa-road"></i> Woldia</strong>
+                <p>Transport Hub, City Center</p>
+                <div class="branch-features">
+                    <span class="feature-tag">Traveler Stop</span>
+                    <span class="feature-tag">24/7 Service</span>
+                    <span class="feature-tag">Quick Service</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <iframe 
+                id="mapFrame"
+                class="map"
+                src="https://www.google.com/maps?q=Gondar+Piazza+Ethiopia&output=embed"
+                loading="lazy"
+                allowfullscreen>
+            </iframe>
+            
+            <div class="map-overlay">
+                <h4><i class="fas fa-info-circle"></i> How to Use</h4>
+                <p>Click on any branch to view it on the map. Use the map controls to zoom, pan, or get directions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Branch Details Section -->
+    <div id="branchDetails" class="branch-details active">
+        <div class="branch-details-header">
+            <i class="fas fa-utensils"></i>
+            <h3>Gondar Piazza Branch</h3>
+        </div>
+        
+        <div class="details-grid">
+            <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h4>Address</h4>
+                    <p>Piazza Area, Near Goha Hotel, Gondar, Ethiopia</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h4>Hours</h4>
+                    <p>Monday - Sunday: 6:00 AM - 11:00 PM</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+251 58 111 6789</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h4>Email</h4>
+                    <p>gondarpiazza@habeshacoffee.com</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-user-tie"></i>
+                <div>
+                    <h4>Manager</h4>
+                    <p>Michael Teshome</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-wifi"></i>
+                <div>
+                    <h4>Amenities</h4>
+                    <p>Free WiFi, Live Music, Art Gallery, Private Events, Traditional Coffee Ceremony</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amhara Region Information -->
+    <div class="amhara-info">
+        <h3><i class="fas fa-landmark"></i> About Amhara Region</h3>
+        <p>The Amhara Region is the historical heartland of Ethiopia, home to ancient civilizations, UNESCO World Heritage sites, and the birthplace of Ethiopian coffee culture. Our branches are strategically located to serve both locals and visitors exploring this magnificent region.</p>
+        
+        <div class="amhara-grid">
+            <div class="amhara-feature">
+                <i class="fas fa-archway"></i>
+                <h4>Historical Sites</h4>
+                <p>Near UNESCO World Heritage sites including Gondar Castles and Lalibela Rock Churches</p>
+            </div>
+            
+            <div class="amhara-feature">
+                <i class="fas fa-seedling"></i>
+                <h4>Coffee Origin</h4>
+                <p>Amhara region is known for producing some of Ethiopia's finest Arabica coffee beans</p>
+            </div>
+            
+            <div class="amhara-feature">
+                <i class="fas fa-music"></i>
+                <h4>Cultural Hub</h4>
+                <p>Center of traditional Ethiopian music, art, and cultural celebrations</p>
+            </div>
+            
+            <div class="amhara-feature">
+                <i class="fas fa-users"></i>
+                <h4>Community Focus</h4>
+                <p>Each branch supports local farmers and promotes sustainable coffee practices</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4><i class="fas fa-coffee"></i> Habesha Coffee Shop</h4>
+            <p>Serving authentic Ethiopian coffee since 2010. Experience the rich tradition and flavor of Ethiopia's finest coffee beans from Amhara region.</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <h4><i class="fas fa-link"></i> Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="branche.html">Branches</a></li>
+                <li><a href="about.html">Our Story</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h4><i class="fas fa-map-marker-alt"></i> Amhara Branches</h4>
+            <ul class="footer-links">
+                <li>Gondar Piazza</li>
+                <li>Gondar Airport</li>
+                <li>Bahir Dar</li>
+                <li>Debre Tabor</li>
+                <li>Debre Markos</li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h4><i class="fas fa-headset"></i> Contact Info</h4>
+            <ul class="footer-links">
+                <li><i class="fas fa-phone"></i> +251 58 111 6789</li>
+                <li><i class="fas fa-envelope"></i> info@habeshacoffee.com</li>
+                <li><i class="fas fa-clock"></i> 6:00 AM - 11:00 PM Daily</li>
+                <li><i class="fas fa-map-marker-alt"></i> Head Office: Gondar, Amhara</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        <p>&copy; 2025 Habesha Coffee Shop. All Rights Reserved. | Proudly Serving Ethiopian Coffee Culture in Amhara Region</p>
+    </div>
+</footer>
+
+<script>
+    // Branch data for Amhara Region
+    const branches = [
+        {
+            name: "Gondar Piazza",
+            address: "Piazza Area, Near Goha Hotel, Gondar, Ethiopia",
+            hours: "Monday - Sunday: 6:00 AM - 11:00 PM",
+            phone: "+251 58 111 6789",
+            email: "gondarpiazza@habeshacoffee.com",
+            manager: "Michael Teshome",
+            features: ["Free WiFi", "Live Music", "Art Gallery", "Private Events", "Traditional Coffee Ceremony"],
+            mapQuery: "Gondar Piazza Ethiopia",
+            icon: "fa-utensils"
+        },
+        {
+            name: "Gondar Airport",
+            address: "Gondar Airport Terminal, Departure Area, Gondar, Ethiopia",
+            hours: "Monday - Sunday: 5:00 AM - 10:00 PM",
+            phone: "+251 58 111 3456",
+            email: "airport@habeshacoffee.com",
+            manager: "Helen Solomon",
+            features: ["Airport Location", "Grab & Go", "Traveler Specials", "Souvenir Coffee"],
+            mapQuery: "Gondar Airport Ethiopia",
+            icon: "fa-plane"
+        },
+        {
+            name: "Bahir Dar",
+            address: "Lake Tana Shore, Near Blue Nile Hotel, Bahir Dar, Ethiopia",
+            hours: "Monday - Sunday: 7:00 AM - 10:00 PM",
+            phone: "+251 58 220 5678",
+            email: "bahirdar@habeshacoffee.com",
+            manager: "Dawit Girma",
+            features: ["Lake View", "Boat Access", "Traditional Music", "Conference Room"],
+            mapQuery: "Bahir Dar Ethiopia",
+            icon: "fa-water"
+        },
+        {
+            name: "Debre Tabor",
+            address: "City Center, Near Simien Mountains, Debre Tabor, Ethiopia",
+            hours: "Monday - Sunday: 6:30 AM - 10:30 PM",
+            phone: "+251 58 771 5678",
+            email: "debretabor@habeshacoffee.com",
+            manager: "Samuel Asrat",
+            features: ["Mountain View", "Local Artisans", "Cultural Events", "Parking"],
+            mapQuery: "Debre Tabor Ethiopia",
+            icon: "fa-mountain"
+        },
+        {
+            name: "Debre Markos",
+            address: "University Area, Near DMU Campus, Debre Markos, Ethiopia",
+            hours: "Monday - Sunday: 7:00 AM - 10:00 PM",
+            phone: "+251 58 771 1234",
+            email: "debremarkos@habeshacoffee.com",
+            manager: "Tigist Assefa",
+            features: ["Student Discount", "Study Area", "Book Exchange", "Fast WiFi"],
+            mapQuery: "Debre Markos Ethiopia",
+            icon: "fa-graduation-cap"
+        },
+        {
+            name: "Lalibela",
+            address: "Near Rock-Hewn Churches, Lalibela, Ethiopia",
+            hours: "Monday - Sunday: 6:00 AM - 10:00 PM",
+            phone: "+251 33 111 2345",
+            email: "lalibela@habeshacoffee.com",
+            manager: "Daniel Mekonnen",
+            features: ["Tourist Hub", "Cultural Heritage", "Guide Service", "Souvenir Shop"],
+            mapQuery: "Lalibela Ethiopia",
+            icon: "fa-church"
+        },
+        {
+            name: "Woldia",
+            address: "Transport Hub, City Center, Woldia, Ethiopia",
+            hours: "Monday - Sunday: 5:30 AM - 11:30 PM",
+            phone: "+251 33 444 5678",
+            email: "woldia@habeshacoffee.com",
+            manager: "Ruth Abraham",
+            features: ["Traveler Stop", "24/7 Service", "Quick Service", "Parking"],
+            mapQuery: "Woldia Ethiopia",
+            icon: "fa-road"
+        }
+    ];
+
+    // Current active branch
+    let activeBranchIndex = 0;
+
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navbar = document.getElementById('navbar');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+        mobileMenuBtn.innerHTML = navbar.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!navbar.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+            navbar.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', () => {
+            navbar.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+    });
+
+    function changeMap(place, index) {
+        // Update map
+        const mapFrame = document.getElementById("mapFrame");
+        mapFrame.src = "https://www.google.com/maps?q=" + place + "&output=embed";
+        
+        // Update active branch card
+        document.querySelectorAll('.branch-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        
+        const clickedCard = document.querySelectorAll('.branch-card')[index];
+        clickedCard.classList.add('active');
+        
+        // Update branch details
+        updateBranchDetails(index);
+        activeBranchIndex = index;
+    }
+
+    function updateBranchDetails(index) {
+        const branch = branches[index];
+        const detailsSection = document.getElementById("branchDetails");
+        
+        // Update header
+        const headerIcon = detailsSection.querySelector('.branch-details-header i');
+        const headerTitle = detailsSection.querySelector('.branch-details-header h3');
+        
+        headerIcon.className = `fas ${branch.icon}`;
+        headerTitle.textContent = branch.name + " Branch";
+        
+        // Update details grid
+        const detailsGrid = detailsSection.querySelector('.details-grid');
+        detailsGrid.innerHTML = `
+            <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h4>Address</h4>
+                    <p>${branch.address}</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h4>Hours</h4>
+                    <p>${branch.hours}</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4>Phone</h4>
+                    <p>${branch.phone}</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h4>Email</h4>
+                    <p>${branch.email}</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-user-tie"></i>
+                <div>
+                    <h4>Manager</h4>
+                    <p>${branch.manager}</p>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-wifi"></i>
+                <div>
+                    <h4>Amenities</h4>
+                    <p>${branch.features.join(", ")}</p>
+                </div>
+            </div>
+        `;
+        
+        // Show details with animation
+        detailsSection.classList.remove('active');
+        setTimeout(() => {
+            detailsSection.classList.add('active');
+        }, 10);
+    }
+
+    // Initialize with first branch
+    window.onload = function() {
+        changeMap('Gondar Piazza Ethiopia', 0);
+        
+        // Set active link in navbar
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    };
+</script>
+
+</body>
+</html>

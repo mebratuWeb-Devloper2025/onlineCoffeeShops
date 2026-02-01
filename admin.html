@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Coffee - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Secure Background Animation */
+        .secure-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a0f0a, #2c1810, #41171A, #1a0f0a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -2;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .security-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(212, 165, 116, 0.1) 2%, transparent 2%),
+                radial-gradient(circle at 75px 75px, rgba(212, 165, 116, 0.1) 2%, transparent 2%);
+            background-size: 100px 100px;
+            animation: patternMove 20s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        /* Coffee Bean Animation */
+        .coffee-beans {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .coffee-bean {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            background: #8B4513;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: floatBean 20s linear infinite;
+        }
+        
+        @keyframes floatBean {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Admin Container */
+        .admin-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #d4a574;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #d4a574;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2c1810;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .admin-logo h1 {
+            color: #d4a574;
+            font-size: 1.8rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, #d4a574, #b88a5c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c1810;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-role {
+            font-size: 0.9rem;
+            color: #d4a574;
+            font-weight: 600;
+        }
+        
+        .logout-btn {
+            background: #d4a574;
+            color: #2c1810;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logout-btn:hover {
+            background: #b88a5c;
+            transform: translateY(-2px);
+        }
+        
+        /* Admin Main Content */
+        .admin-main {
+            flex: 1;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .admin-sidebar {
+            background: rgba(44, 24, 16, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+        
+        .sidebar-section h3 {
+            color: #d4a574;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-nav a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-nav a:hover {
+            background: rgba(212, 165, 116, 0.1);
+            color: #d4a574;
+            transform: translateX(5px);
+        }
+        
+        .sidebar-nav a.active {
+            background: rgba(212, 165, 116, 0.2);
+            color: #d4a574;
+            border-left: 3px solid #d4a574;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-header h2 {
+            color: #2c1810;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid #d4a574;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card.system {
+            border-left-color: #e74c3c;
+        }
+        
+        .stat-card.finance {
+            border-left-color: #2ecc71;
+        }
+        
+        .stat-card.product {
+            border-left-color: #3498db;
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .stat-icon.system {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .stat-icon.finance {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+        
+        .stat-icon.product {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c1810;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Permissions Grid */
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .permission-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+        
+        .permission-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .permission-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+        
+        .permission-icon.system {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .permission-icon.finance {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+        
+        .permission-icon.product {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+        
+        .permission-title h3 {
+            color: #2c1810;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .permission-title .role {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .permission-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+            padding: 8px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        
+        .permission-item i {
+            color: #2ecc71;
+            font-size: 14px;
+        }
+        
+        .permission-item.restricted i {
+            color: #e74c3c;
+        }
+        
+        .permission-item span {
+            color: #2c1810;
+            font-size: 0.9rem;
+        }
+        
+        .restriction-list {
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        
+        .restriction-list h4 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .restriction-item {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            margin-top: 2rem;
+        }
+        
+        .quick-actions h3 {
+            color: #2c1810;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #d4a574, #b88a5c);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+        
+        .action-btn.secondary {
+            background: #f0f0f0;
+            color: #2c1810;
+        }
+        
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.6s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: #d4a574;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #2c1810;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+        }
+        
+        .login-header h2 {
+            color: #2c1810;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-header p {
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #2c1810;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+        }
+        
+        .role-select {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .role-option {
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .role-option:hover {
+            border-color: #d4a574;
+            background: rgba(212, 165, 116, 0.05);
+        }
+        
+        .role-option.active {
+            border-color: #d4a574;
+            background: rgba(212, 165, 116, 0.1);
+        }
+        
+        .role-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #d4a574;
+        }
+        
+        .role-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2c1810;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #d4a574, #b88a5c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.4);
+        }
+        
+        .security-note {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .security-note i {
+            color: #2ecc71;
+            margin-right: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .admin-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-stats,
+            .permissions-grid,
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .admin-user {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .user-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Secure Background Animation -->
+    <div class="secure-background"></div>
+    <div class="security-pattern"></div>
+    <div class="coffee-beans" id="coffeeBeans"></div>
+    
+    <!-- Admin Dashboard Container -->
+    <div class="admin-container" id="adminContainer">
+        <!-- Login Screen (Visible by default) -->
+        <div class="login-container" id="loginScreen">
+            <div class="login-box">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h2>Habesha Coffee Admin</h2>
+                    <p>Secure Role-Based Access Control</p>
+                </div>
+                
+                <div class="role-select">
+                    <div class="role-option" data-role="system">
+                        <div class="role-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="role-name">System Admin</div>
+                    </div>
+                    <div class="role-option" data-role="finance">
+                        <div class="role-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="role-name">Financial Controller</div>
+                    </div>
+                    <div class="role-option active" data-role="product">
+                        <div class="role-icon">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="role-name">Product Manager</div>
+                    </div>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter admin username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                    </button>
+                </form>
+                
+                <div class="security-note">
+                    <i class="fas fa-shield-check"></i> All activities are logged and monitored
+                </div>
+            </div>
+        </div>
+        
+        <!-- Admin Dashboard (Hidden by default) -->
+        <div class="admin-dashboard" id="adminDashboard" style="display: none;">
+            <!-- Admin Header -->
+            <header class="admin-header">
+                <div class="admin-logo">
+                    <div class="admin-logo-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h1>Habesha Coffee Admin Panel</h1>
+                </div>
+                
+                <div class="admin-user">
+                    <div class="user-avatar" id="userAvatar">PM</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Product Manager</div>
+                        <div class="user-role" id="userRole">Product Manager</div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Main Content -->
+            <main class="admin-main">
+                <!-- Sidebar -->
+                <aside class="admin-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Main Navigation</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                            <li><a href="#" data-section="permissions"><i class="fas fa-user-shield"></i> Role Permissions</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Quick Access</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#" data-section="system" class="system-only"><i class="fas fa-cogs"></i> System Settings</a></li>
+                            <li><a href="#" data-section="finance" class="finance-only"><i class="fas fa-dollar-sign"></i> Financial Reports</a></li>
+                            <li><a href="#" data-section="products" class="product-only"><i class="fas fa-coffee"></i> Manage Products</a></li>
+                            <li><a href="#" data-section="users" class="system-only"><i class="fas fa-users"></i> User Management</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Analytics</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#" data-section="reports" class="finance-only system-only"><i class="fas fa-chart-bar"></i> Sales Reports</a></li>
+                            <li><a href="#" data-section="inventory" class="product-only system-only"><i class="fas fa-boxes"></i> Inventory</a></li>
+                            <li><a href="#" data-section="logs" class="system-only"><i class="fas fa-history"></i> Activity Logs</a></li>
+                        </ul>
+                    </div>
+                </aside>
+                
+                <!-- Dashboard Content -->
+                <div class="dashboard-content" id="dashboardContent">
+                    <!-- Dashboard View -->
+                    <div class="dashboard-view" id="dashboardView">
+                        <div class="dashboard-header">
+                            <h2>Welcome to Habesha Coffee Admin</h2>
+                            <p>Manage your coffee shop operations efficiently with role-based access control</p>
+                        </div>
+                        
+                        <div class="dashboard-stats">
+                            <div class="stat-card system system-only">
+                                <div class="stat-header">
+                                    <div class="stat-icon system">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">Active Admin Roles</div>
+                            </div>
+                            
+                            <div class="stat-card finance finance-only">
+                                <div class="stat-header">
+                                    <div class="stat-icon finance">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                </div>
+                                <div class="stat-value">126</div>
+                                <div class="stat-label">Today's Orders</div>
+                            </div>
+                            
+                            <div class="stat-card product product-only">
+                                <div class="stat-header">
+                                    <div class="stat-icon product">
+                                        <i class="fas fa-coffee"></i>
+                                    </div>
+                                </div>
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Menu Items</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-actions">
+                            <h3>Quick Actions</h3>
+                            <div class="action-buttons">
+                                <button class="action-btn system-only" onclick="showSection('system')">
+                                    <i class="fas fa-user-cog"></i> Manage Admins
+                                </button>
+                                <button class="action-btn finance-only" onclick="showSection('finance')">
+                                    <i class="fas fa-file-invoice-dollar"></i> View Reports
+                                </button>
+                                <button class="action-btn product-only" onclick="showSection('products')">
+                                    <i class="fas fa-plus-circle"></i> Add New Product
+                                </button>
+                                <button class="action-btn secondary system-only" onclick="showSection('logs')">
+                                    <i class="fas fa-history"></i> View Activity Logs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Permissions View -->
+                    <div class="permissions-view" id="permissionsView" style="display: none;">
+                        <div class="dashboard-header">
+                            <h2>Role-Based Permissions</h2>
+                            <p>Detailed overview of access levels for each admin role</p>
+                        </div>
+                        
+                        <div class="permissions-grid">
+                            <!-- System Administrator Card -->
+                            <div class="permission-card">
+                                <div class="permission-header">
+                                    <div class="permission-icon system">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="permission-title">
+                                        <h3>System Administrator</h3>
+                                        <div class="role">Overall Control</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="permission-list">
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Create/edit/delete all admin accounts</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Access ALL system features and settings</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Backup and restore system data</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>View all logs and activity history</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Emergency system overrides</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Manage payment gateway settings</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Can impersonate any user role</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Financial Controller Card -->
+                            <div class="permission-card">
+                                <div class="permission-header">
+                                    <div class="permission-icon finance">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="permission-title">
+                                        <h3>Financial Controller</h3>
+                                        <div class="role">Price & Reports</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="permission-list">
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Update product prices (coffee items)</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Set special offers/discounts</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>View daily/weekly/monthly sales reports</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Generate profit/loss statements</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Process refunds</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Track revenue and expenses</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Export financial data (Excel/PDF)</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="restriction-list">
+                                    <h4>Restrictions</h4>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot create/delete admin accounts</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot modify system settings</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot manage menu items (only pricing)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product Manager Card -->
+                            <div class="permission-card">
+                                <div class="permission-header">
+                                    <div class="permission-icon product">
+                                        <i class="fas fa-coffee"></i>
+                                    </div>
+                                    <div class="permission-title">
+                                        <h3>Product Manager</h3>
+                                        <div class="role">Menu Management</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="permission-list">
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Add new coffee/products to menu</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Edit existing menu items</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Delete/archive menu items</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Update product descriptions</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Upload product images</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Manage product categories</span>
+                                    </div>
+                                    <div class="permission-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Set product availability status</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="restriction-list">
+                                    <h4>Restrictions</h4>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot change product prices</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot view financial reports</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot access transaction details</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot modify payment settings</span>
+                                    </div>
+                                    <div class="restriction-item">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cannot access admin management</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other sections would go here -->
+                    <div id="otherSections" style="display: none;">
+                        <!-- Content dynamically loaded based on role -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Create coffee beans animation
+        function createCoffeeBeans() {
+            const container = document.getElementById('coffeeBeans');
+            for (let i = 0; i < 30; i++) {
+                const bean = document.createElement('div');
+                bean.className = 'coffee-bean';
+                bean.style.left = `${Math.random() * 100}%`;
+                bean.style.animationDelay = `${Math.random() * 20}s`;
+                bean.style.width = `${10 + Math.random() * 15}px`;
+                bean.style.height = `${5 + Math.random() * 8}px`;
+                container.appendChild(bean);
+            }
+        }
+        
+        // Role data
+        const roles = {
+            system: {
+                name: "System Administrator",
+                short: "SA",
+                color: "#e74c3c",
+                permissions: ['system', 'finance', 'product', 'users', 'logs', 'reports', 'inventory']
+            },
+            finance: {
+                name: "Financial Controller",
+                short: "FC",
+                color: "#2ecc71",
+                permissions: ['finance', 'reports']
+            },
+            product: {
+                name: "Product Manager",
+                short: "PM",
+                color: "#3498db",
+                permissions: ['product', 'inventory']
+            }
+        };
+        
+        let currentRole = 'product';
+        let currentUser = '';
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createCoffeeBeans();
+            setupRoleSelection();
+            setupLogin();
+            setupNavigation();
+        });
+        
+        // Role selection
+        function setupRoleSelection() {
+            const roleOptions = document.querySelectorAll('.role-option');
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    roleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentRole = this.dataset.role;
+                });
+            });
+        }
+        
+        // Login system
+        function setupLogin() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                if (!username.trim()) {
+                    alert('Please enter a username');
+                    return;
+                }
+                
+                // Simulate login
+                currentUser = username;
+                loginUser(currentRole);
+            });
+        }
+        
+        // Login user
+        function loginUser(role) {
+            const loginScreen = document.getElementById('loginScreen');
+            const adminDashboard = document.getElementById('adminDashboard');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            const userAvatar = document.getElementById('userAvatar');
+            
+            // Set user info
+            userName.textContent = currentUser;
+            userRole.textContent = roles[role].name;
+            userAvatar.textContent = roles[role].short;
+            userAvatar.style.background = `linear-gradient(45deg, ${roles[role].color}, ${darkenColor(roles[role].color, 20)})`;
+            
+            // Switch screens
+            loginScreen.style.display = 'none';
+            adminDashboard.style.display = 'block';
+            
+            // Update UI based on role
+            updateUIForRole(role);
+            
+            // Show welcome notification
+            showNotification(`Welcome ${currentUser}! Logged in as ${roles[role].name}`);
+        }
+        
+        // Logout
+        document.getElementById('logoutBtn')?.addEventListener('click', function() {
+            const loginScreen = document.getElementById('loginScreen');
+            const adminDashboard = document.getElementById('adminDashboard');
+            
+            // Reset form
+            document.getElementById('loginForm').reset();
+            
+            // Switch screens
+            loginScreen.style.display = 'flex';
+            adminDashboard.style.display = 'none';
+            
+            showNotification('Successfully logged out');
+        });
+        
+        // Update UI based on role
+        function updateUIForRole(role) {
+            // Hide/show sidebar items based on permissions
+            const sidebarItems = document.querySelectorAll('.sidebar-nav a');
+            sidebarItems.forEach(item => {
+                const section = item.dataset.section;
+                if (section && !roles[role].permissions.includes(section)) {
+                    item.style.display = 'none';
+                } else {
+                    item.style.display = 'flex';
+                }
+            });
+            
+            // Hide/show quick action buttons
+            const actionButtons = document.querySelectorAll('.action-btn');
+            actionButtons.forEach(btn => {
+                if (btn.classList.contains(`${role}-only`)) {
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            
+            // Hide/show stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                if (card.classList.contains(`${role}-only`)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Navigation
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const section = this.dataset.section;
+                    showSection(section);
+                });
+            });
+        }
+        
+        // Show section
+        function showSection(section) {
+            // Check if user has permission
+            if (!roles[currentRole].permissions.includes(section)) {
+                showNotification('You do not have permission to access this section', 'error');
+                return;
+            }
+            
+            // Hide all views
+            const views = ['dashboardView', 'permissionsView', 'otherSections'];
+            views.forEach(view => {
+                document.getElementById(view).style.display = 'none';
+            });
+            
+            // Show selected view
+            if (section === 'dashboard') {
+                document.getElementById('dashboardView').style.display = 'block';
+            } else if (section === 'permissions') {
+                document.getElementById('permissionsView').style.display = 'block';
+            } else {
+                document.getElementById('otherSections').style.display = 'block';
+                document.getElementById('otherSections').innerHTML = `
+                    <div class="dashboard-header">
+                        <h2>${section.charAt(0).toUpperCase() + section.slice(1)} Management</h2>
+                        <p>${getSectionDescription(section)}</p>
+                    </div>
+                    <div style="padding: 2rem; text-align: center;">
+                        <div style="font-size: 4rem; color: #d4a574; margin-bottom: 1rem;">
+                            <i class="fas fa-${getSectionIcon(section)}"></i>
+                        </div>
+                        <h3 style="color: #2c1810; margin-bottom: 1rem;">${roles[currentRole].name} Access</h3>
+                        <p style="color: #666; max-width: 600px; margin: 0 auto;">
+                            You have appropriate permissions to manage this section as a ${roles[currentRole].name}.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Helper functions
+        function darkenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+        
+        function getSectionIcon(section) {
+            const icons = {
+                'system': 'cogs',
+                'finance': 'chart-line',
+                'products': 'coffee',
+                'users': 'users',
+                'logs': 'history',
+                'reports': 'chart-bar',
+                'inventory': 'boxes'
+            };
+            return icons[section] || 'cog';
+        }
+        
+        function getSectionDescription(section) {
+            const descriptions = {
+                'system': 'Manage system settings and administrator accounts',
+                'finance': 'View financial reports and manage pricing',
+                'products': 'Manage coffee menu items and product catalog',
+                'users': 'Manage customer and staff accounts',
+                'logs': 'View system activity and audit logs',
+                'reports': 'Generate sales and performance reports',
+                'inventory': 'Manage stock levels and inventory'
+            };
+            return descriptions[section] || 'Manage this section of the admin panel';
+        }
+        
+        // Notification system
+        function showNotification(message, type = 'success') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#e74c3c' : '#2ecc71'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 300px;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

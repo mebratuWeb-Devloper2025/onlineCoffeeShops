@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Coffee - Authentic Ethiopian Coffee</title>
+    <link rel="stylesheet" href="order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9f5f0;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: #41171A;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: #d4a574;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #d4a574;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .cart-btn,
+        .user-btn,
+        .history-btn {
+            background: #d4a574;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .cart-btn:hover,
+        .user-btn:hover,
+        .history-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6rem 5% 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: #1c1c1c;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 10px;
+
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: #0ef;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #b88a5c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .products-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c1810;
+            margin-bottom: 2rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #d4a574;
+            background: transparent;
+            color: #d4a574;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #d4a574;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #d4a574;
+            color: white;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            color: #2c1810;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-origin {
+            color: #d4a574;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: #2c1810;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background: none;
+            font-weight: 600;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: #d4a574;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #b88a5c;
+        }
+
+        /* Traditional Sets */
+        .traditional-section {
+            padding: 4rem 5%;
+            background: #2c1810;
+            color: white;
+        }
+
+        .traditional-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #d4a574;
+        }
+
+        .sets-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .set-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .set-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .set-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .set-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .set-card h3 {
+            color: #d4a574;
+            margin-bottom: 1rem;
+        }
+
+        .set-items {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .set-items li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .set-items li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #d4a574;
+        }
+
+        .set-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-items {
+            padding: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            color: #2c1810;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: #d4a574;
+            font-weight: 600;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-total {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+
+        .cart-actions {
+            padding: 0 1.5rem 1.5rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Enhanced Checkout Modal */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkout-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-checkout {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Multi-step Form Styles */
+        .form-step {
+            display: none;
+            padding: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-step h4 {
+            color: #2c1810;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c1810;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Map Container */
+        .map-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+
+        .map-container:hover {
+            border-color: #d4a574;
+            background: #fefaf6;
+        }
+
+        .map-placeholder {
+            color: #666;
+        }
+
+        .map-placeholder i {
+            font-size: 48px;
+            color: #d4a574;
+            margin-bottom: 10px;
+        }
+
+        .map-placeholder p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Enhanced Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fff;
+        }
+
+        .payment-option:hover {
+            border-color: #d4a574;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+
+        .payment-option input[type="radio"]:checked+.payment-icon+.payment-info {
+            color: #d4a574;
+        }
+
+        .payment-option input[type="radio"]:checked~* {
+            border-color: #d4a574;
+            background: #fefaf6;
+        }
+
+        .payment-icon {
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .payment-icon i {
+            font-size: 24px;
+            color: #666;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            display: block;
+            font-weight: 600;
+            color: #2c1810;
+        }
+
+        .payment-desc {
+            display: block;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Payment Details */
+        .payment-details {
+            margin-bottom: 25px;
+        }
+
+        .payment-details-content {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+        }
+
+        .payment-details-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-instruction {
+            background: #fff;
+            border-left: 4px solid #d4a574;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .payment-instruction h5 {
+            color: #2c1810;
+            margin-bottom: 10px;
+        }
+
+        .payment-instruction ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .payment-instruction li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .account-info {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .account-info.highlight {
+            background: #fefaf6;
+            border-color: #d4a574;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 165, 116, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(212, 165, 116, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 165, 116, 0);
+            }
+        }
+
+        .account-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c1810;
+            letter-spacing: 2px;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .account-name {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .account-branch {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .payment-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #d4a574;
+            margin: 15px 0;
+        }
+
+        .verify-payment {
+            margin-top: 20px;
+        }
+
+        .verify-payment h5 {
+            margin-bottom: 10px;
+            color: #2c1810;
+        }
+
+        .verify-payment input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* Order Summary in Checkout */
+        .order-summary {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .order-summary h4 {
+            color: #2c1810;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .order-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+            text-align: right;
+            font-size: 18px;
+        }
+
+        /* Review Section */
+        .review-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-section h5 {
+            color: #2c1810;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-info {
+            line-height: 1.6;
+        }
+
+        .review-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .review-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-total {
+            text-align: right;
+            font-size: 18px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        .terms-agreement {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .terms-agreement label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .terms-agreement input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .terms-link {
+            color: #d4a574;
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Navigation */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .form-navigation button {
+            min-width: 120px;
+        }
+
+        /* Payment Processing Modal */
+        .payment-processing {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 24, 16, 0.95);
+            z-index: 1003;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .processing-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: modalSlide 0.3s ease;
+        }
+
+        .processing-spinner {
+            margin-bottom: 20px;
+        }
+
+        .processing-spinner .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #d4a574;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .payment-timer {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d4a574;
+            margin-top: 20px;
+        }
+
+        /* Transaction Success Modal */
+        .transaction-success {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 24, 16, 0.95);
+            z-index: 1003;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: modalSlide 0.3s ease;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .success-details {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .success-details p {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .success-details span:last-child {
+            font-weight: 600;
+            color: #2c1810;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Transaction History Modal */
+        .transaction-history {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1003;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow: hidden;
+            animation: modalSlide 0.3s ease;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-history {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-filters input,
+        .history-filters select {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .transaction-item {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .transaction-item:hover {
+            border-color: #d4a574;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-id {
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 5px;
+        }
+
+        .transaction-details {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .transaction-right {
+            text-align: right;
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            color: #d4a574;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .transaction-status {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .transaction-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .transaction-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .transaction-status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .history-summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            border-top: 1px solid #eee;
+            background: #f9f9f9;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item span {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .summary-item strong {
+            font-size: 18px;
+            color: #2c1810;
+        }
+
+        /* Order Confirmation */
+        .confirmation {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirmation-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: modalSlide 0.3s ease;
+        }
+
+        .confirmation-content i {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-content h3 {
+            color: #2c1810;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-content p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c1810;
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: #d4a574;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .footer-section i {
+            margin-right: 10px;
+            color: #d4a574;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .payment-icons i {
+            cursor: pointer;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+        }
+
+        /* Notification System */
+        #notification-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+
+        .notification {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+            transform-origin: top right;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .error-highlight {
+            border: 2px solid #f44336 !important;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 7rem 1rem 2rem;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+
+            .products-container,
+            .sets-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                flex-wrap: wrap;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .form-navigation button {
+                width: 100%;
+            }
+
+            .success-actions {
+                flex-direction: column;
+            }
+
+            .history-filters {
+                flex-direction: column;
+            }
+
+            .transaction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .transaction-right {
+                width: 100%;
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="Logo.png" alt="Coffee Bean">
+                <h1>Habesha Coffee Shop</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Coffee</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="history-btn" id="historyBtn">
+                    <i class="fas fa-history"></i>
+                </button>
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Experience Authentic Ethiopian Coffee</h2>
+            <p>From the birthplace of coffee - fresh beans, traditional brewing, and authentic taste</p>
+            <button class="btn-primary" onclick="scrollToProducts()">Shop Now</button>
+        </div>
+        <div class="hero-image">
+            <img src="pho.png" alt="Ethiopian Coffee Ceremony">
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <h2>Our Coffee Menu selection</h2>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+
+        </div>
+        <div class="products-container" id="productsContainer">
+            <!-- Products will be loaded dynamically -->
+        </div>
+    </section>
+
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Your Shopping Cart</h3>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will appear here -->
+            </div>
+            <div class="cart-total">
+                <h4>Total: <span id="cartTotal">0 ETB</span></h4>
+            </div>
+            <div class="cart-actions">
+                <button class="btn-secondary" id="clearCart">Clear Cart</button>
+                <button class="btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h3>Complete Your Order</h3>
+                <button class="close-checkout" id="closeCheckout">&times;</button>
+            </div>
+
+            <!-- Multi-step checkout form -->
+            <form id="checkoutForm">
+                <!-- Step 1: Customer Information -->
+                <div class="form-step active" id="step1">
+                    <h4>Customer Information</h4>
+
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Primary Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="09XXXXXXXX or +2519XXXXXXXX" required>
+                        <small class="form-hint">Format: 0912345678 or +251912345678</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone2">Alternative Phone Number (Optional)</label>
+                        <input type="tel" id="phone2" placeholder="09XXXXXXXX">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="region">Region *</label>
+                            <select id="region" required>
+                                <option value="">Select Region</option>
+                                <option value="amhara">Amhara</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zone">Zone *</label>
+                            <input type="text" id="zone" placeholder="Enter your zone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="woreda">Woreda *</label>
+                            <input type="text" id="woreda" placeholder="Enter woreda" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kebele">Kebele</label>
+                            <input type="text" id="kebele" placeholder="Kebele (optional)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Exact Address *</label>
+                        <textarea id="address" rows="3" placeholder="House number, street name, landmark, etc."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn-secondary next-step" data-next="step2">Next: Payment
+                            Method</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Payment Method -->
+                <div class="form-step" id="step2">
+                    <h4>Select Payment Method</h4>
+
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="telebirr" checked>
+                            <div class="payment-icon">
+                                <img src="tel.jpg" alt="Telebirr" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="payment-info">
+                                <span class="payment-name">Telebirr</span>
+                                <span class="payment-desc">Send money via Telebirr</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cbe">
+                            <div class="payment-icon">
+                                <img src="cbe.jpg" alt="CBE" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="payment-info">
+                                <span class="payment-name">CBE Birr</span>
+                                <span class="payment-desc">Bank transfer to CBE</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="mpesa">
+                            <div class="payment-icon">
+                                <img src="mp.jpg" alt="M-Pesa" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="payment-info">
+                                <span class="payment-name">M-Pesa</span>
+                                <span class="payment-desc">Mobile money transfer</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cod">
+                            <div class="payment-icon">
+                                <img src="cash.jpg" alt="cash" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="payment-info">
+                                <span class="payment-name">Cash on Delivery</span>
+                                <span class="payment-desc">Pay when you receive</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Payment Details Container -->
+                    <div class="payment-details" id="paymentDetails">
+                        <!-- Details will be loaded based on selected payment method -->
+                    </div>
+
+                    <div class="order-summary">
+                        <h4>Order Summary</h4>
+                        <div id="orderSummary"></div>
+                        <div class="order-total">
+                            <strong>Total Amount: <span id="orderTotal">0 ETB</span></strong>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn-secondary prev-step" data-prev="step1">Back</button>
+                        <button type="button" class="btn-primary next-step" data-next="step3">Next: Review
+                            Order</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Review & Submit -->
+                <div class="form-step" id="step3">
+                    <h4>Review Your Order</h4>
+
+                    <div class="review-section">
+                        <h5>Customer Information</h5>
+                        <div class="review-info" id="reviewCustomer"></div>
+                    </div>
+
+                    <div class="review-section">
+                        <h5>Delivery Address</h5>
+                        <div class="review-info" id="reviewAddress"></div>
+                    </div>
+
+                    <div class="review-section">
+                        <h5>Payment Method</h5>
+                        <div class="review-info" id="reviewPayment"></div>
+                    </div>
+
+                    <div class="review-section">
+                        <h5>Order Items</h5>
+                        <div class="review-items" id="reviewItems"></div>
+                        <div class="review-total">
+                            <strong>Total: <span id="reviewTotal">0 ETB</span></strong>
+                        </div>
+                    </div>
+
+                    <div class="terms-agreement">
+                        <label>
+                            <input type="checkbox" id="terms" required>
+                            I agree to the <a href="#" class="terms-link">Terms and Conditions</a> and confirm that all
+                            information provided is accurate.
+                        </label>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn-secondary prev-step" data-prev="step2">Back</button>
+                        <button type="submit" class="btn-primary" id="submitOrder">
+                            <i class="fas fa-lock"></i> Place Order & Pay
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div class="payment-processing" id="paymentProcessing">
+        <div class="processing-content">
+            <div class="processing-spinner">
+                <div class="spinner"></div>
+            </div>
+            <h3>Processing Payment</h3>
+            <p id="processingMessage">Please wait while we process your payment...</p>
+            <div class="payment-timer" id="paymentTimer">30s</div>
+        </div>
+    </div>
+
+    <!-- Transaction Success Modal -->
+    <div class="transaction-success" id="transactionSuccess">
+        <div class="success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Payment Successful!</h3>
+            <div class="success-details">
+                <p><strong>Order Number:</strong> <span id="successOrderNumber"></span></p>
+                <p><strong>Transaction ID:</strong> <span id="transactionId"></span></p>
+                <p><strong>Amount Paid:</strong> <span id="successAmount"></span> ETB</p>
+                <p><strong>Payment Method:</strong> <span id="successMethod"></span></p>
+                <p><strong>Date:</strong> <span id="successDate"></span></p>
+            </div>
+            <div class="success-actions">
+                <button class="btn-secondary" id="printReceipt">
+                    <i class="fas fa-print"></i> Print Receipt
+                </button>
+                <button class="btn-primary" id="closeSuccess">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction History Modal -->
+    <div class="transaction-history" id="transactionHistory">
+        <div class="history-content">
+            <div class="history-header">
+                <h3>Transaction History</h3>
+                <button class="close-history" id="closeHistory">&times;</button>
+            </div>
+            <div class="history-filters">
+                <input type="text" id="searchTransactions" placeholder="Search transactions...">
+                <select id="filterDate">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- Transactions will be loaded here -->
+            </div>
+            <div class="history-summary">
+                <div class="summary-item">
+                    <span>Total Transactions:</span>
+                    <strong id="totalTransactions">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Total Amount:</span>
+                    <strong id="totalAmount">0 ETB</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation -->
+    <div class="confirmation" id="confirmation">
+        <div class="confirmation-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Order Placed Successfully!</h3>
+            <p>Your order number is: <strong id="orderNumber"></strong></p>
+            <p>We'll contact you shortly for confirmation.</p>
+            <button class="btn-primary" id="closeConfirmation">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Habesha Coffee</h4>
+                <p>Bringing authentic Ethiopian coffee to your home since 2024</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone"></i> +251 991215273</p>
+                <p><i class="fas fa-envelope"></i> info@habeshacoffee.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Payment Methods</h4>
+                <div class="payment-icons">
+                    <i class="fas fa-mobile-alt" title="Telebirr"></i>
+                    <i class="fas fa-university" title="CBE"></i>
+                    <i class="fas fa-wallet" title="M-Pesa"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Habesha Coffee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="order.js"></script>
+</body>
+
+</html>
